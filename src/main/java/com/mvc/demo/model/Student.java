@@ -1,7 +1,5 @@
 package com.mvc.demo.model;
 
-import org.springframework.stereotype.Component;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +15,8 @@ public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+//	NEVER USE UNDERSCORE FLW NAMING CONVENTION 
+//	ILL UPDATE IN NEXT ONE
 	private String first_name;
 	private String last_name;
 	private Integer age;

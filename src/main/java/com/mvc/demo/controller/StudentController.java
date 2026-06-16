@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mvc.demo.dto.StudentDto;
 import com.mvc.demo.model.Student;
 import com.mvc.demo.service.StudentService;
-
-import om.mvc.demo.dto.StudentDto;
 
 @RestController
 public class StudentController {
@@ -41,13 +40,19 @@ public class StudentController {
 	
 	@PutMapping("/update")
 	public ResponseEntity<Student> updateStudent(@RequestParam Integer id, @RequestBody StudentDto dto) {
-		return studentservice.updateStudent(id, dto.getFirst_name(), dto.getLast_name(), dto.getAge(), dto.getStandard(), dto.getFees());
+		return studentservice.updateStudent(id, dto);
 	}
 	
 	@DeleteMapping("/delete")
 	public ResponseEntity<Student> deleteStudent(@RequestParam Integer id){
 		return studentservice.deleteStudent(id);
 	}
+	
+	@GetMapping("/sorting")
+	public List<Student> sortStudent(@RequestParam String sort, @RequestParam(required = false, defaultValue = "asc") String order) {
+		return studentservice.fetchBySorting(sort, order);
+	}
+	
 	
 	
 }
