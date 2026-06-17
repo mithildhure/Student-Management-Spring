@@ -20,7 +20,7 @@ import com.mvc.demo.repo.StudentRepo;
 public class StudentService {
 
 	@Autowired
-	StudentRepo studentrepo;
+	private StudentRepo studentrepo;
 	
 //	INSERT
 	public ResponseEntity<Student> insertStudent(Student student){
@@ -54,18 +54,18 @@ public class StudentService {
 	}
 	
 //	Fetch All
-	public List<Student> fetchAll(){
-		return studentrepo.findAll();
+	public ResponseEntity<List<Student>> fetchAll(){
+		return ResponseEntity.ok(studentrepo.findAll());
 	}
 	
 //	Pagination
-	public Page<Student> fetchPagination(Integer pageNumber){
+	public ResponseEntity<Page<Student>> fetchPagination(Integer pageNumber){
 		Pageable pageable = PageRequest.of(pageNumber-1, 10);
-		return studentrepo.findAll(pageable);
+		return ResponseEntity.ok(studentrepo.findAll(pageable));
 	}
 	
 //	Sorting
-	public List<Student> fetchBySorting(String sort, String order) {
+	public ResponseEntity<List<Student>> fetchBySorting(String sort, String order) {
 		
 		List<Student> students = null;
 		
@@ -74,10 +74,13 @@ public class StudentService {
 		}else {
 			students = studentrepo.findAll(Sort.by(sort));
 		}
-		return students;
+		return ResponseEntity.ok(students);
 	}
 	
 //	Filter
+// ===========================================================================================
+//	Service Methods for Frontend
+	
 	
 	
 	
