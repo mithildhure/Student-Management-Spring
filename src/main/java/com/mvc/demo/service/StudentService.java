@@ -32,8 +32,8 @@ public class StudentService {
 		if (studentrepo.existsById(id)) {
 			Optional<Student> o = studentrepo.findById(id);
 			Student s = o.get();
-			s.setFirst_name(stud.getFirstname());
-			s.setLast_name(stud.getLastname());
+			s.setFirst_name(stud.getFirst_name());
+			s.setLast_name(stud.getLast_name());
 			s.setAge(stud.getAge());
 			s.setStandard(stud.getStandard());
 			s.setFees(stud.getFees());
@@ -50,6 +50,17 @@ public class StudentService {
 			return new ResponseEntity<Student>(HttpStatus.NO_CONTENT);
 		}else {
 			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+//	FETCH BY ID
+	public ResponseEntity<Student> fetchStudentById(Integer id){
+		Optional<Student> optional = studentrepo.findById(id);
+		if (optional.isPresent()) {
+			Student student = optional.get();
+			return new ResponseEntity<Student>(student, HttpStatus.OK);	
+		}else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	

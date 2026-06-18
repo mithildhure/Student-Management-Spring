@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,7 @@ public class StudentController {
 	@Autowired
 	private StudentService studentservice;
 	
-	@GetMapping("/fetch")
+	@GetMapping("/fetchPage")
 	public ResponseEntity<Page<Student>> fetchByPage(@RequestParam Integer page) {
 		return studentservice.fetchPagination(page);
 	}
@@ -33,7 +34,12 @@ public class StudentController {
 	@GetMapping("/fetchAll")
 	public ResponseEntity<List<Student>> fetch() {
 		return studentservice.fetchAll();
-	}	
+	}
+	
+	@GetMapping("/fetch/{id}")
+	public ResponseEntity<Student> getMethodName(@PathVariable Integer id) {
+		return studentservice.fetchStudentById(id);
+	}
 	
 	@PostMapping("/save")
 	public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
