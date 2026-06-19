@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class StudentDto {
 
-	private String first_name;
-	private String last_name;
+	private String firstname;
+	private String lastname;
 	private Integer age;
 	private Integer standard;
 	private Double fees;

@@ -28,7 +28,7 @@ const StudentList = () => {
         order: sortOrder,
       },
     });
-    setStudents(response.data);   // response.data is the array
+    setStudents(response.data);   
     setTotalPage(0);
   } catch (error) {
     console.log("Failed to sort:", error);
@@ -68,7 +68,7 @@ const handleDelete = (id) => {
         if (isSorted) {
           fetchSorted();
         } else {
-          fetchPage(currentPage);   // ✅ pass the current page
+          fetchPage(currentPage); 
         }
       })
       .catch((err) => {
@@ -126,8 +126,8 @@ const resetToPagination = () => {
             onChange={(e) => setSortField(e.target.value)}
           >
             <option value="id">ID</option>
-            <option value="first_name">First Name</option>
-            <option value="last_name">Last Name</option>
+            <option value="firstname">First Name</option>
+            <option value="lastname">Last Name</option>
             <option value="age">Age</option>
             <option value="standard">Standard</option>
             <option value="fees">Fees</option>
@@ -195,8 +195,8 @@ const resetToPagination = () => {
               students.map((student) => (
                 <tr key={student.id}>
                   <td>{student.id}</td>
-                  <td>{student.first_name}</td>
-                  <td>{student.last_name}</td>
+                  <td>{student.firstname}</td>
+                  <td>{student.lastname}</td>
                   <td>{student.age}</td>
                   <td>{student.standard}</td>
                   <td>{student.fees}</td>

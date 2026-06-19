@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AddStudent = () => {
 
-    const [student, setStudent] = useState({"first_name":'',"last_name":'',"age":'',"standard":'',"fees":''});
+    const [student, setStudent] = useState({"firstname":'',"lastname":'',"age":'',"standard":'',"fees":''});
     const navigate = useNavigate();
     const [submit, setSubmit] = useState(false);
 
@@ -48,10 +48,10 @@ const AddStudent = () => {
                 <input
                     type="text"
                     className="form-control"
-                    name="first_name"
+                    name="firstname"
                     id="formId1"
                     placeholder=""
-                    value={student.first_name}
+                    value={student.firstname}
                     onChange={handleChange}
                     required
                 />
@@ -62,10 +62,10 @@ const AddStudent = () => {
                 <input
                     type="text"
                     className="form-control"
-                    name="last_name"
+                    name="lastname"
                     id="formId1"
                     placeholder=""
-                    value={student.last_name}
+                    value={student.lastname}
                     onChange={handleChange}
                     required
                 />

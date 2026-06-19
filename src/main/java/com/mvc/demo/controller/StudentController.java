@@ -61,4 +61,10 @@ public class StudentController {
 		return studentservice.fetchBySorting(sort, order);
 	}
 	
+	@GetMapping("/search")
+	public ResponseEntity<List<Student>> searchStudent(@RequestParam String name) {
+		return studentservice.searchStudent(name);
+	}
+	
+	
 }

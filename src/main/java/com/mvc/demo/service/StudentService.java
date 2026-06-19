@@ -32,8 +32,8 @@ public class StudentService {
 		if (studentrepo.existsById(id)) {
 			Optional<Student> o = studentrepo.findById(id);
 			Student s = o.get();
-			s.setFirst_name(stud.getFirst_name());
-			s.setLast_name(stud.getLast_name());
+			s.setFirstname(stud.getFirstname());
+			s.setLastname(stud.getLastname());
 			s.setAge(stud.getAge());
 			s.setStandard(stud.getStandard());
 			s.setFees(stud.getFees());
@@ -64,6 +64,11 @@ public class StudentService {
 		}
 	}
 	
+//	Search
+	public ResponseEntity<List<Student>> searchStudent(String name){
+		return new ResponseEntity<List<Student>>(studentrepo.searchStudents(name), HttpStatus.OK);
+	}
+	
 //	Fetch All
 	public ResponseEntity<List<Student>> fetchAll(){
 		return ResponseEntity.ok(studentrepo.findAll());
@@ -89,11 +94,5 @@ public class StudentService {
 	}
 	
 //	Filter
-// ===========================================================================================
-//	Service Methods for Frontend
-	
-	
-	
-	
 	
 }

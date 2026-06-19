@@ -5,8 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 const EditStudent = () => {
 
     const [student, setStudent] = useState({
-        "first_name" : '',
-        "last_name" : '',
+        "firstname" : '',
+        "lastname" : '',
         "age" : '',
         "standard" : '',
         "fees" : ''
@@ -75,8 +75,8 @@ const EditStudent = () => {
             <input
                 type="text"
                 className="form-control"
-                name="first_name"
-                value={student.first_name}
+                name="firstname"
+                value={student.firstname}
                 onChange={handleChange}
                 required
             />
@@ -87,8 +87,8 @@ const EditStudent = () => {
             <input
                 type="text"
                 className="form-control"
-                name="last_name"
-                value={student.last_name}
+                name="lastname"
+                value={student.lastname}
                 onChange={handleChange}
                 required
             />

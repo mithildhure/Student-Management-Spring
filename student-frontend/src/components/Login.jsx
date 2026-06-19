@@ -78,7 +78,7 @@ const Login = () => {
         <h4 className='my-3'>New User ? <NavLink className='text-primary' to='/register'>Register</NavLink> </h4>
 
       </div>
-      
+    
 
     </>
   )

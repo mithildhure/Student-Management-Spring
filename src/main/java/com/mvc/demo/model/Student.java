@@ -17,8 +17,8 @@ public class Student {
 	private Integer id;
 //	NEVER USE UNDERSCORE FLW NAMING CONVENTION 
 //	ILL UPDATE IN NEXT ONE
-	private String first_name;
-	private String last_name;
+	private String firstname;
+	private String lastname;
 	private Integer age;
 	private Integer standard;
 	private Double fees;
