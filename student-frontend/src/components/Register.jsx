@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Register = () => {
 
@@ -33,7 +33,7 @@ const Register = () => {
   return (
     <>
       
-      <h3 className='text-center p-3 bg-dark text-success'>Welcome</h3>
+      <h3 className='text-center p-3 bg-dark text-primary'>Welcome</h3>
 
       <div
         className="container col-5 my-4 p-3 bg-light rounded text-center"
@@ -105,6 +105,8 @@ const Register = () => {
             </button>
             
         </form>
+
+        <h4 className='my-3'>Existing User ? <NavLink className='text-primary' to='/login'>Login</NavLink> </h4>
 
       </div>
       

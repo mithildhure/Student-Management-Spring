@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
@@ -19,6 +19,8 @@ const Login = () => {
     const handleSubmit = (e)=>{
         e.preventDefault();
         axios.post(`http://localhost:8080/login`, user).then((result) => {
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('user', JSON.stringify(result.data));
             navigate('/')
         }).catch((err) => {
             alert('Wrong Username or password');
@@ -72,6 +74,8 @@ const Login = () => {
                                   
 
         </form>
+
+        <h4 className='my-3'>New User ? <NavLink className='text-primary' to='/register'>Register</NavLink> </h4>
 
       </div>
       

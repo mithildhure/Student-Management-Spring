@@ -9,6 +9,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.js'
 import Layout from './components/Layout'
 import Login from './components/Login'
 import Register from './components/Register'
+import ProtectedRoute from './components/ProtectedRoute'
 // import Footer from './components/footer'
 
 function App() {
@@ -20,9 +21,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<Layout/>}>
-              <Route path='/' element={<StudentList/>} />
-              <Route path='/addStudent' element={<AddStudent/>} />
-              <Route path='/editStudent/:id' element={<EditStudent/>} />
+              <Route path='/' element={<ProtectedRoute><StudentList/></ProtectedRoute>} />
+              <Route path='/addStudent' element={<ProtectedRoute><AddStudent/></ProtectedRoute>} />
+              <Route path='/editStudent/:id' element={<ProtectedRoute><EditStudent/></ProtectedRoute>} />
           </Route>
 
           <Route path='/register' element={<Register/>} />

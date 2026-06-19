@@ -1,8 +1,15 @@
 import React from 'react'
-import {NavLink} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 // Navlink is used with classNameName not className!!
 
 const Navbar = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const navigate = useNavigate();
+    const handleLogout = ()=>{
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('user');
+        navigate('/login');
+    }
   return (
     <>
       
@@ -27,9 +34,12 @@ const Navbar = () => {
                     <li className="nav-item">
                         <NavLink className="nav-link" to="/" aria-current="page">Home</NavLink>
                     </li>
-                    <li className="nav-item">
-                        <NavLink className="nav-link" to="/">Link</NavLink>
+                    {user && (
+                        <li className="nav-item">
+                        {/* <NavLink className="nav-link" to="/">Link</NavLink> */}
+                        <NavLink className='nav-link' to="/">Welcome {user.uName}</NavLink>
                     </li>
+                    )}
                 </ul>
                 <form className="d-flex my-2 my-lg-0">
                     <input
@@ -44,6 +54,18 @@ const Navbar = () => {
                         Search
                     </button>
                 </form>
+
+                {
+                    user && (
+                        <button
+                            type="button"
+                            className="btn btn-outline-danger mx-2"
+                            onClick={handleLogout}
+                        >
+                            Logout
+                        </button>                        
+                    )
+                }
             </div>
         </div>
        </nav>
