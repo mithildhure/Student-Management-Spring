@@ -11,41 +11,71 @@ const StudentList = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
   const [pageSize] = useState(10);
+
+  const [sortField, setSortField] = useState('id');
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [isSorted, setIsSorted] = useState(false);
+
   const navigate = useNavigate();
 
-  const fetchPage = async (page) => {
-    setLoading(true);
-    try {
-      const respone = await axios.get(`http://localhost:8080/students/fetchPage`,{
-        params : {
-          pageNumber:page,
-          pageS :pageSize
-        }
-      });
-      setStudents(respone.data.content);
-      setTotalPage(respone.data.totalPages);
-      setCurrentPage(page);
-    } catch (error) {
-        console.log(error);
-    } finally {
-      setLoading(false);
-    }
+  const fetchSorted = async () => {
+  setLoading(true);
+  setIsSorted(true);
+  try {
+    const response = await axios.get(`http://localhost:8080/students/sorting`, {
+      params: {
+        sort: sortField,
+        order: sortOrder,
+      },
+    });
+    setStudents(response.data);   // response.data is the array
+    setTotalPage(0);
+  } catch (error) {
+    console.log("Failed to sort:", error);
+  } finally {
+    setLoading(false);
   }
+};
+
+  const fetchPage = async (page) => {
+  setLoading(true);
+  setIsSorted(false);
+  try {
+    const response = await axios.get(`http://localhost:8080/students/fetchPage`, {
+      params: {
+        pageNumber: page,
+        pageSize: pageSize 
+      }
+    });
+    setStudents(response.data.content);
+    setTotalPage(response.data.totalPages);
+    setCurrentPage(page);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    setLoading(false);
+  }
+}
 
   useEffect(()=>{
     fetchPage(0);
 },[]);
 
-const handleDelete = (id)=>{
+const handleDelete = (id) => {
   if (window.confirm('Are You sure u want to delete This Student?')) {
-    axios.delete(`http://localhost:8080/students/delete?id=${id}`).then(() => {
-      setStudents(students.filter(s => s.id !== id))
-      navigate('/');
-  }).catch((err) => {
-    console.log('Failed to Delete',err);
-  });
+    axios.delete(`http://localhost:8080/students/delete?id=${id}`)
+      .then(() => {
+        if (isSorted) {
+          fetchSorted();
+        } else {
+          fetchPage(currentPage);   // ✅ pass the current page
+        }
+      })
+      .catch((err) => {
+        console.log('Failed to Delete', err);
+      });
   }
-}
+};
 
 const goToPage = (page)=>{
     if(page >= 0 && page < totalPage){
@@ -53,13 +83,17 @@ const goToPage = (page)=>{
     }
 }
 
-const goToPrev = ()=>{
-  goToPage(currentPage - 1);
-}
+const toggleOrder = () => {
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+  };
 
-const goToNext = ()=>{
-  goToPage(currentPage + 1);
-}
+const applySort = () => {
+    fetchSorted();
+};
+
+const resetToPagination = () => {
+    fetchPage(0);
+};
 
   if (loading) {
     return(
@@ -84,11 +118,52 @@ const goToNext = ()=>{
         className="container text-end"
        >
         
-        <NavLink
-        className=" btn btn-success my-2"
-        to="/addStudent"
-        role="button"
-        >Add Student</NavLink>
+        <div className="row mb-3 align-items-center">
+        <div className="col-md-6 d-flex gap-2">
+          <select
+            className="form-select w-auto"
+            value={sortField}
+            onChange={(e) => setSortField(e.target.value)}
+          >
+            <option value="id">ID</option>
+            <option value="first_name">First Name</option>
+            <option value="last_name">Last Name</option>
+            <option value="age">Age</option>
+            <option value="standard">Standard</option>
+            <option value="fees">Fees</option>
+          </select>
+
+          <button
+            className="btn btn-outline-secondary"
+            onClick={toggleOrder}
+            type="button"
+          >
+            {sortOrder === 'asc' ? 'Asc' : 'Desc'}
+          </button>
+
+          <button
+            className="btn btn-primary"
+            onClick={applySort}
+          >
+            Sort
+          </button>
+
+          {isSorted && (
+            <button
+              className="btn btn-warning"
+              onClick={resetToPagination}
+            >
+              Reset to Pagination
+            </button>
+          )}
+        </div>
+
+        <div className="col-md-6 text-end">
+          <NavLink className="btn btn-success" to="/addStudent" role="button">
+            Add Student
+          </NavLink>
+        </div>
+      </div>
       
        </div>
        
@@ -149,16 +224,17 @@ const goToNext = ()=>{
             </tbody>
           </table>
         </div>
+
+
         
-          {totalPage > 0 && (
+        {!isSorted && totalPage > 0 && (
         <nav aria-label="Page navigation">
           <ul className="pagination justify-content-center">
             <li className={`page-item ${currentPage === 0 ? 'disabled' : ''}`}>
-              <button className="page-link" onClick={goToPrev} aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
+              <button className="page-link" onClick={() => goToPage(currentPage - 1)}>
+                «
               </button>
             </li>
-
             {[...Array(totalPage).keys()].map((page) => (
               <li
                 key={page}
@@ -169,10 +245,9 @@ const goToNext = ()=>{
                 </button>
               </li>
             ))}
-
             <li className={`page-item ${currentPage === totalPage - 1 ? 'disabled' : ''}`}>
-              <button className="page-link" onClick={goToNext} aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
+              <button className="page-link" onClick={() => goToPage(currentPage + 1)}>
+                »
               </button>
             </li>
           </ul>
