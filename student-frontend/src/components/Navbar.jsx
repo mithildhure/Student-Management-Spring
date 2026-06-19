@@ -7,7 +7,7 @@ const Navbar = () => {
     <>
       
        <nav
-        className="navbar navbar-expand-sm navbar-light bg-light"
+        className="navbar navbar-expand-xl navbar-dark bg-dark"
        >
         <div className="container">
             <NavLink className="navbar-brand" to="/">Student</NavLink>

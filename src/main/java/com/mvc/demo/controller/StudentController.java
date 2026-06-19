@@ -27,8 +27,8 @@ public class StudentController {
 	private StudentService studentservice;
 	
 	@GetMapping("/fetchPage")
-	public ResponseEntity<Page<Student>> fetchByPage(@RequestParam Integer page) {
-		return studentservice.fetchPagination(page);
+	public ResponseEntity<Page<Student>> fetchByPage(@RequestParam(defaultValue = "0") Integer pageNumber, @RequestParam(defaultValue = "10", required = false) Integer pageSize) {
+		return studentservice.fetchPagination(pageNumber, pageSize);
 	}
 	
 	@GetMapping("/fetchAll")

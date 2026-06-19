@@ -70,8 +70,8 @@ public class StudentService {
 	}
 	
 //	Pagination
-	public ResponseEntity<Page<Student>> fetchPagination(Integer pageNumber){
-		Pageable pageable = PageRequest.of(pageNumber-1, 10);
+	public ResponseEntity<Page<Student>> fetchPagination(Integer pageNumber, Integer pageSize){
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		return ResponseEntity.ok(studentrepo.findAll(pageable));
 	}
 	
