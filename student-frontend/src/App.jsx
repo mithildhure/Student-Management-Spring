@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.js'
 import Layout from './components/Layout'
 import Login from './components/Login'
+import Register from './components/Register'
 // import Footer from './components/footer'
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
               <Route path='/editStudent/:id' element={<EditStudent/>} />
           </Route>
 
+          <Route path='/register' element={<Register/>} />
           <Route path='/login' element={<Login/>} />
         </Routes>
         {/* <Footer/> */}
